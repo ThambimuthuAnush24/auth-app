@@ -34,7 +34,7 @@ const SignUp = () => {
         </div>
         
         <div className="bg-white p-8 rounded-xl shadow-md">
-          <div className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -101,23 +101,22 @@ const SignUp = () => {
                 onChange={handleChange}
               />
             </div>
-          </div>
 
-          <div className="mt-6">
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Sign up
-            </button>
-          </div>
+            <div className="mt-6">
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Sign up
+              </button>
+            </div>
+          </form>
           
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Already have an account?{''}
+              Already have an account?{' '}
               <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
-                Sign  in
+                Sign in
               </span>
             </p>
           </div>
