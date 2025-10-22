@@ -7,7 +7,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Navigate to="/signin" replace />} />
+          <Route path="/" element={<Navigate to="/signup" replace />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>

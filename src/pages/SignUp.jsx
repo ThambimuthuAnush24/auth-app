@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +22,10 @@ const SignUp = () => {
     console.log('Sign up data:', formData)
     alert('Sign up functionality would be implemented here!')
   }
+
+  useEffect(() => {
+    console.log('SignUp component rendered')
+  }, [])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
