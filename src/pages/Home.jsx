@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-3xl w-full mx-auto px-6 py-12">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">

@@ -28,7 +28,7 @@ const SignUp = () => {
   }, [])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-white">
       <div className="max-w-md w-full mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">
