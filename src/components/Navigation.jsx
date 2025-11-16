@@ -39,6 +39,16 @@ const Navigation = () => {
               About
             </Link>
             <Link
+              to="/contact"
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive('/contact')
+                  ? 'bg-blue-50 text-blue-700'
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              Contact
+            </Link>
+            <Link
               to="/signup"
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive('/signup')

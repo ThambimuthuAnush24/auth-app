@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import SignUp from './pages/SignUp'
 import Home from './pages/Home'
 import About from './pages/About'
+import Contact from './pages/Contact'
 import Navigation from './components/Navigation'
 
 
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<SignUp />} />
           {/* Fallback: redirect unknown routes to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
