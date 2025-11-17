@@ -28,16 +28,16 @@ const SignUp = () => {
   }, [])
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-white">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-white overflow-hidden">
       <div className="max-w-md w-full mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">
+        <div className="text-center mb-8 animate-[fadeInDown_0.8s_ease-out]">
+          <h2 className="text-3xl font-bold text-gray-900 hover:[transform:scale(1.05)_rotateX(5deg)] transition-transform duration-300 [perspective:1000px]">
             Create your account
           </h2>
           <p className="mt-2 text-gray-600">Join us today and get started</p>
         </div>
         
-        <div className="bg-white p-8 rounded-xl shadow-md">
+        <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl animate-[fadeInUp_0.8s_ease-out_0.2s_both] transition-all duration-500 hover:[transform:translateY(-5px)_rotateX(2deg)_scale(1.01)] [perspective:1000px] [transform-style:preserve-3d]">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -109,7 +109,7 @@ const SignUp = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 hover:scale-105 hover:[transform:translateY(-3px)_rotateX(5deg)] [perspective:1000px]"
               >
                 Sign up
               </button>

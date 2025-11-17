@@ -24,20 +24,20 @@ const Contact = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 py-12 px-4">
+    <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 py-12 px-4 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">
+          <h1 className="text-4xl font-bold text-gray-900 mb-3 animate-[fadeInDown_0.8s_ease-out] hover:[transform:scale(1.05)_rotateX(5deg)] transition-transform duration-300 [perspective:1000px]">
             Get in Touch
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 animate-[fadeInUp_0.8s_ease-out_0.2s_both]">
             Have questions? We'd love to hear from you. Send us a message!
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <div className="bg-white rounded-2xl shadow-lg p-8 animate-[fadeInLeft_0.8s_ease-out_0.3s_both] hover:shadow-2xl transition-all duration-500 hover:[transform:translateY(-10px)_rotateY(-5deg)_scale(1.02)] [perspective:1000px] [transform-style:preserve-3d]">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">
               Send us a Message
             </h2>
@@ -108,7 +108,7 @@ const Contact = () => {
 
               <button
                 type="submit"
-                className="w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium rounded-lg shadow-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                className="w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 hover:scale-105 hover:[transform:translateY(-3px)_rotateX(5deg)] [perspective:1000px]"
               >
                 Send Message
               </button>
@@ -117,7 +117,7 @@ const Contact = () => {
 
           {/* Contact Info */}
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
+            <div className="bg-white rounded-2xl shadow-lg p-8 animate-[fadeInRight_0.8s_ease-out_0.4s_both] hover:shadow-2xl transition-all duration-500 hover:[transform:translateY(-10px)_rotateY(5deg)_scale(1.02)] [perspective:1000px] [transform-style:preserve-3d]">
               <h2 className="text-2xl font-semibold text-gray-900 mb-6">
                 Contact Information
               </h2>
@@ -161,7 +161,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl shadow-lg p-8 text-white">
+            <div className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl shadow-lg p-8 text-white animate-[fadeInRight_0.8s_ease-out_0.6s_both] hover:shadow-2xl transition-all duration-500 hover:[transform:translateY(-10px)_rotateY(5deg)_scale(1.05)] [perspective:1000px] [transform-style:preserve-3d]">
               <h3 className="text-xl font-semibold mb-3">Business Hours</h3>
               <div className="space-y-2 text-purple-50">
                 <p className="flex justify-between">
