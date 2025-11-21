@@ -12,7 +12,13 @@ const Navigation = () => {
   const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/about', label: 'About' },
+    { path: '/dashboard', label: 'Dashboard' },
     { path: '/contact', label: 'Contact' }
+  ]
+
+  const userLinks = [
+    { path: '/profile', label: 'Profile', icon: '👤' },
+    { path: '/settings', label: 'Settings', icon: '⚙️' }
   ]
 
   return (
@@ -46,9 +52,27 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
+            
+            <div className="h-6 w-px bg-white bg-opacity-30 mx-2"></div>
+            
+            {userLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-1 ${
+                  isActive(link.path)
+                    ? 'bg-white text-blue-700 shadow-lg scale-105'
+                    : 'text-white hover:bg-white hover:bg-opacity-20 hover:scale-105'
+                }`}
+              >
+                <span>{link.icon}</span>
+                {link.label}
+              </Link>
+            ))}
+            
             <Link
               to="/signup"
-              className={`ml-4 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-xl ${
+              className={`ml-2 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-xl ${
                 isActive('/signup')
                   ? 'bg-yellow-400 text-gray-900 scale-105'
                   : 'bg-white text-blue-600 hover:bg-yellow-400 hover:text-gray-900 hover:scale-110'
@@ -93,6 +117,25 @@ const Navigation = () => {
                   {link.label}
                 </Link>
               ))}
+              
+              <div className="h-px bg-white bg-opacity-30 my-2"></div>
+              
+              {userLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                    isActive(link.path)
+                      ? 'bg-white text-blue-700 shadow-lg'
+                      : 'text-white bg-white bg-opacity-10 hover:bg-opacity-20'
+                  }`}
+                >
+                  <span>{link.icon}</span>
+                  {link.label}
+                </Link>
+              ))}
+              
               <Link
                 to="/signup"
                 onClick={() => setIsMobileMenuOpen(false)}
