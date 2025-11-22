@@ -70,6 +70,19 @@ const Navigation = () => {
               </Link>
             ))}
             
+            <div className="h-6 w-px bg-white bg-opacity-30 mx-2"></div>
+            
+            <Link
+              to="/login"
+              className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-xl border-2 ${
+                isActive('/login')
+                  ? 'bg-white text-blue-600 border-white scale-105'
+                  : 'bg-transparent text-white border-white hover:bg-white hover:text-blue-600 hover:scale-105'
+              }`}
+            >
+              Login
+            </Link>
+            
             <Link
               to="/signup"
               className={`ml-2 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-xl ${
@@ -135,6 +148,20 @@ const Navigation = () => {
                   {link.label}
                 </Link>
               ))}
+              
+              <div className="h-px bg-white bg-opacity-30 my-2"></div>
+              
+              <Link
+                to="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md border-2 ${
+                  isActive('/login')
+                    ? 'bg-white text-blue-600 border-white'
+                    : 'bg-transparent text-white border-white hover:bg-white hover:text-blue-600'
+                }`}
+              >
+                Login
+              </Link>
               
               <Link
                 to="/signup"

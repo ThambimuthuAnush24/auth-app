@@ -119,9 +119,9 @@ const SignUp = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
+              <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer hover:underline">
                 Sign in
-              </span>
+              </Link>
             </p>
           </div>
         </div>
