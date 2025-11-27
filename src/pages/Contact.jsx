@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,21 +7,62 @@ const Contact = () => {
     subject: '',
     message: ''
   })
+  const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [charCount, setCharCount] = useState(0)
 
-  const handleChange = (e) => {
+  const nameRef = useRef(null)
+  const formRef = useRef(null)
+
+  useEffect(() => {
+    if (nameRef.current) {
+      nameRef.current.focus()
+    }
+  }, [])
+
+  useEffect(() => {
+    setCharCount(formData.message.length)
+  }, [formData.message])
+
+  const validateForm = useCallback(() => {
+    const newErrors = {}
+    if (!formData.name.trim()) newErrors.name = 'Name is required'
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid'
+    }
+    if (!formData.subject.trim()) newErrors.subject = 'Subject is required'
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required'
+    } else if (formData.message.length < 10) {
+      newErrors.message = 'Message must be at least 10 characters'
+    }
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }, [formData])
+
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }, [errors])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault()
-    console.log('Contact form data:', formData)
-    alert('Thank you for contacting us! We will get back to you soon.')
-    setFormData({ name: '', email: '', subject: '', message: '' })
-  }
+    if (!validateForm()) return
+
+    setIsSubmitting(true)
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setSubmitSuccess(true)
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      setTimeout(() => setSubmitSuccess(false), 3000)
+    }, 1500)
+  }, [formData, validateForm])
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 py-12 px-4 overflow-hidden">
@@ -41,12 +82,18 @@ const Contact = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">
               Send us a Message
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+              {submitSuccess && (
+                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                  Message sent successfully!
+                </div>
+              )}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Your Name
                 </label>
                 <input
+                  ref={nameRef}
                   id="name"
                   name="name"
                   type="text"

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 const Profile = () => {
@@ -11,6 +11,51 @@ const Profile = () => {
     website: 'https://johndoe.com',
     joined: 'January 2024'
   })
+  const [avatarUrl, setAvatarUrl] = useState('')
+  const [uploadProgress, setUploadProgress] = useState(0)
+  
+  const fileInputRef = useRef(null)
+
+  useEffect(() => {
+    // Load profile from localStorage
+    const savedProfile = localStorage.getItem('userProfile')
+    if (savedProfile) {
+      setProfile(JSON.parse(savedProfile))
+    }
+    console.log('Profile loaded')
+  }, [])
+
+  useEffect(() => {
+    // Save profile to localStorage
+    localStorage.setItem('userProfile', JSON.stringify(profile))
+  }, [profile])
+
+  const handleAvatarUpload = useCallback((e) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadstart = () => setUploadProgress(0)
+      reader.onprogress = (e) => {
+        if (e.lengthComputable) {
+          setUploadProgress((e.loaded / e.total) * 100)
+        }
+      }
+      reader.onload = () => {
+        setAvatarUrl(reader.result)
+        setUploadProgress(100)
+      }
+      reader.readAsDataURL(file)
+    }
+  }, [])
+
+  const handleProfileUpdate = useCallback((field, value) => {
+    setProfile(prev => ({ ...prev, [field]: value }))
+  }, [])
+
+  const engagementScore = useMemo(() => {
+    const completeness = Object.values(profile).filter(v => v).length / Object.keys(profile).length
+    return Math.round(completeness * 100)
+  }, [profile])
 
   const achievements = [
     { title: 'Early Adopter', icon: '🌟', description: 'Joined in the first month' },

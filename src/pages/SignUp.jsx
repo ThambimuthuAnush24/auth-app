@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -7,25 +8,86 @@ const SignUp = () => {
     email: '',
     password: ''
   })
+  const [errors, setErrors] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [passwordStrength, setPasswordStrength] = useState(0)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // In a real app, you would send this data to your backend
-    console.log('Sign up data:', formData)
-    alert('Sign up functionality would be implemented here!')
-  }
+  const firstNameRef = useRef(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    console.log('SignUp component rendered')
+    console.log('SignUp component mounted')
+    if (firstNameRef.current) {
+      firstNameRef.current.focus()
+    }
   }, [])
+
+  useEffect(() => {
+    // Calculate password strength
+    const password = formData.password
+    let strength = 0
+    if (password.length >= 8) strength += 25
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 25
+    if (/\d/.test(password)) strength += 25
+    if (/[^a-zA-Z0-9]/.test(password)) strength += 25
+    setPasswordStrength(strength)
+  }, [formData.password])
+
+  const validateForm = useCallback(() => {
+    const newErrors = {}
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required'
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required'
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Invalid email format'
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }, [formData])
+
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }, [errors])
+
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault()
+    
+    if (!validateForm()) return
+
+    setIsLoading(true)
+    
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false)
+      navigate('/login')
+    }, 1500)
+  }, [formData, validateForm, navigate])
+
+  const strengthColor = useMemo(() => {
+    if (passwordStrength < 50) return 'bg-red-500'
+    if (passwordStrength < 75) return 'bg-yellow-500'
+    return 'bg-green-500'
+  }, [passwordStrength])
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-white overflow-hidden">

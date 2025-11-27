@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,20 +8,77 @@ const Login = () => {
     rememberMe: false
   })
   const [showPassword, setShowPassword] = useState(false)
+  const [errors, setErrors] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  
+  const emailRef = useRef(null)
+  const navigate = useNavigate()
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    // Focus email field on mount
+    if (emailRef.current) {
+      emailRef.current.focus()
+    }
+
+    // Check for saved email
+    const savedEmail = localStorage.getItem('rememberedEmail')
+    if (savedEmail) {
+      setFormData(prev => ({ ...prev, email: savedEmail, rememberMe: true }))
+    }
+  }, [])
+
+  const validateForm = useCallback(() => {
+    const newErrors = {}
+    
+    if (!formData.email) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Invalid email format'
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }, [formData])
+
+  const handleChange = useCallback((e) => {
     const { name, value, type, checked } = e.target
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [name]: type === 'checkbox' ? checked : value
-    })
-  }
+    }))
+    
+    // Clear error for this field
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }, [errors])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault()
-    console.log('Login data:', formData)
-    alert('Login functionality would be implemented here!')
-  }
+    
+    if (!validateForm()) return
+
+    setIsLoading(true)
+
+    // Remember email if checkbox is checked
+    if (formData.rememberMe) {
+      localStorage.setItem('rememberedEmail', formData.email)
+    } else {
+      localStorage.removeItem('rememberedEmail')
+    }
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false)
+      navigate('/dashboard')
+    }, 1500)
+  }, [formData, validateForm, navigate])
 
   const socialLogins = [
     { name: 'Google', icon: '🔍', color: 'from-red-500 to-red-600' },

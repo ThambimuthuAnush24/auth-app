@@ -1,6 +1,27 @@
 import { Link } from 'react-router-dom'
 
+import { useState, useEffect, useMemo } from 'react'
+
 const About = () => {
+  const [activeSection, setActiveSection] = useState('tech')
+  const [readTime, setReadTime] = useState(0)
+
+  const technologies = useMemo(() => [
+    { name: 'React', icon: '⚛️', description: 'Modern UI library' },
+    { name: 'Vite', icon: '⚡', description: 'Lightning fast tooling' },
+    { name: 'Tailwind CSS', icon: '🎨', description: 'Utility-first CSS' },
+    { name: 'React Router', icon: '🛣️', description: 'Client-side routing' }
+  ], [])
+
+  useEffect(() => {
+    // Calculate read time
+    const words = 350 // approximate word count
+    const wpm = 200 // words per minute
+    setReadTime(Math.ceil(words / wpm))
+
+    console.log('About page loaded')
+  }, [])
+
   return (
     <div className="min-h-screen bg-gray-50 overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 py-12">

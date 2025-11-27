@@ -1,6 +1,34 @@
 import { Link } from 'react-router-dom'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 const Home = () => {
+  const [isVisible, setIsVisible] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    setIsVisible(true)
+    console.log('Home component mounted')
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      console.log('Home component unmounted')
+    }
+  }, [])
+
+  const handleLearnMore = useCallback(() => {
+    const featuresSection = document.getElementById('features')
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
+
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden relative">
       {/* Decorative background elements */}

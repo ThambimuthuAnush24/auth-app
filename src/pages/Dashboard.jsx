@@ -1,13 +1,51 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 
 const Dashboard = () => {
-  const [stats] = useState([
+  const [stats, setStats] = useState([
     { label: 'Total Users', value: '2,543', change: '+12%', icon: '👥' },
     { label: 'Active Sessions', value: '1,234', change: '+8%', icon: '⚡' },
     { label: 'Success Rate', value: '98.5%', change: '+2.3%', icon: '✓' },
     { label: 'Avg Response', value: '245ms', change: '-15%', icon: '⏱️' }
   ])
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState(new Date())
+
+  useEffect(() => {
+    console.log('Dashboard mounted')
+    
+    // Simulate real-time updates
+    const interval = setInterval(() => {
+      setStats(prev => prev.map(stat => ({
+        ...stat,
+        value: stat.label === 'Active Sessions' 
+          ? String(Math.floor(Math.random() * 500 + 1000))
+          : stat.value
+      })))
+      setLastUpdated(new Date())
+    }, 30000) // Update every 30 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const refreshDashboard = useCallback(() => {
+    setIsRefreshing(true)
+    setTimeout(() => {
+      setStats(prev => prev.map(stat => ({
+        ...stat,
+        value: String(Math.floor(Math.random() * 1000 + 1000))
+      })))
+      setLastUpdated(new Date())
+      setIsRefreshing(false)
+    }, 1000)
+  }, [])
+
+  const totalMetrics = useMemo(() => {
+    return stats.reduce((acc, stat) => {
+      const numValue = parseInt(stat.value.replace(/,/g, ''))
+      return acc + (isNaN(numValue) ? 0 : numValue)
+    }, 0)
+  }, [stats])
 
   const recentActivity = [
     { user: 'John Doe', action: 'Signed up', time: '2 minutes ago', status: 'success' },

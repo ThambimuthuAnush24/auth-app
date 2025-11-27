@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 const Settings = () => {
   const [settings, setSettings] = useState({
@@ -9,10 +9,29 @@ const Settings = () => {
     darkMode: false,
     language: 'english'
   })
+  const [saveStatus, setSaveStatus] = useState('')
 
-  const handleToggle = (key) => {
+  useEffect(() => {
+    // Load settings from localStorage
+    const savedSettings = localStorage.getItem('userSettings')
+    if (savedSettings) {
+      setSettings(JSON.parse(savedSettings))
+    }
+  }, [])
+
+  useEffect(() => {
+    // Auto-save settings to localStorage
+    localStorage.setItem('userSettings', JSON.stringify(settings))
+    
+    if (saveStatus === '') {
+      setSaveStatus('Saved')
+      setTimeout(() => setSaveStatus(''), 2000)
+    }
+  }, [settings])
+
+  const handleToggle = useCallback((key) => {
     setSettings(prev => ({ ...prev, [key]: !prev[key] }))
-  }
+  }, [])
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8 px-4">
